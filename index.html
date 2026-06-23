@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Ayam Bakar 123</title>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #d0d0d0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 30px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.phone {
+  width: 390px;
+  height: 820px;
+  background: #fdf8f0;
+  border-radius: 45px;
+  overflow: hidden;
+  box-shadow: 0 0 0 10px #222, 0 30px 60px rgba(0,0,0,0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Notch */
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 30px;
+  background: #222;
+  border-radius: 0 0 20px 20px;
+  z-index: 100;
+}
+
+.page { display: none; height: 100%; flex-direction: column; overflow: hidden; }
+.page.active { display: flex; }
+
+/* ── HEADER ── */
+.header {
+  background: #A92E2E;
+  padding: 40px 20px 15px;
+  flex-shrink: 0;
+  text-align: center;
+  position: relative;
+}
+.header h1 {
+  font-family: 'Shrikhand', cursive;
+  color: white;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+.header-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 2px;
+}
+.btn-home {
+  position: absolute;
+  top: 38px; right: 14px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.btn-home:hover { background: rgba(255,255,255,0.35); }
+
+/* ── SCROLL BODY ── */
+.scroll-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+.scroll-body::-webkit-scrollbar { width: 4px; }
+.scroll-body::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+
+/* ── BTN ── */
+.btn {
+  background: #A92E2E;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: opacity .2s;
+}
+.btn:hover { opacity: .85; }
+.btn-outline {
+  background: transparent;
+  color: #A92E2E;
+  border: 2px solid #A92E2E;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: all .2s;
+}
+.btn-outline:hover { background: #A92E2E; color: white; }
+.btn-full { width: 100%; display: block; text-align: center; }
+
+/* ────────────────────────────────
+   PAGE 0 — SPLASH
+──────────────────────────────── */
+#page0 {
+  background: #A92E2E;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 30px;
+}
+#page0 .brand { font-family: 'Shrikhand', cursive; color: white; font-size: 36px; line-height: 1.1; }
+#page0 .tagline { color: rgba(255,255,255,0.8); font-size: 13px; }
+#page0 .splash-img {
+  width: 200px; height: 350px;
+  object-fit: cover;
+  border-radius: 20%;
+  border: 4px solid rgba(255,255,255,0.4);
+  margin: 4px 0;
+  
+}
+#page0 .logo-wrap { font-size: 90px; margin: 10px 0; }
+#page0 .btn { background: white; color: #A92E2E; font-size: 16px; padding: 14px 40px; margin-top: 10px; }
+
+/* ────────────────────────────────
+   PAGE 1 — MENU
+──────────────────────────────── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 8px 14px;
+  margin-top: 12px;
+  gap: 8px;
+}
+.search-bar input {
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  flex: 1;
+}
+.search-bar input::placeholder { color: rgba(255,255,255,0.7); }
+.search-icon { color: white; font-size: 14px; }
+
+.menu-card {
+  display: flex;
+  gap: 12px;
+  background: white;
+  padding: 12px;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  margin-bottom: 12px;
+  align-items: center;
+}
+.menu-card img {
+  width: 180px; height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.menu-info { flex: 1; min-width: 0; }
+.menu-info h3 { font-size: 14px; font-weight: 700; color: #222; }
+.menu-info .price { font-size: 13px; font-weight: 700; color: #A92E2E; margin-top: 2px; }
+
+.qty-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.qty-btn {
+  width: 28px; height: 28px;
+  background: #A92E2E;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-weight: bold;
+}
+.qty-btn:hover { opacity: .8; }
+.qty-num {
+  font-size: 15px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.detail-link {
+  font-size: 11px;
+  color: #A92E2E;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.bottom-bar {
+  background: white;
+  padding: 12px 15px;
+  border-top: 1px solid #eee;
+  flex-shrink: 0;
+}
+.cart-btn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #A92E2E;
+  border-radius: 30px;
+  padding: 12px 18px;
+  cursor: pointer;
+}
+.cart-btn-row span { color: white; font-size: 14px; font-weight: 600; }
+.cart-icon { font-size: 18px; }
+
+/* ────────────────────────────────
+   PAGE 2 — DETAIL MENU
+──────────────────────────────── */
+#page2 .detail-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+#page2 .detail-content { padding: 15px; }
+#page2 h2 { font-size: 20px; font-weight: 700; color: #222; }
+#page2 .price-big { font-size: 22px; font-weight: 700; color: #A92E2E; margin: 6px 0; }
+#page2 .desc-text { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 10px; }
+.badge-tersedia {
+  background: #e6f9ee;
+  color: #2d8a4e;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+.qty-row-big {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.qty-btn-big {
+  width: 36px; height: 36px;
+  background: #A92E2E;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold;
+}
+.qty-num-big { font-size: 22px; font-weight: 700; min-width: 30px; text-align: center; }
+.note-area {
+  width: 100%;
+  border: 1.5px solid #ddd;
+  border-radius: 14px;
+  padding: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  height: 80px;
+  resize: none;
+  margin-bottom: 14px;
+  background: white;
+}
+.note-area::placeholder { color: #bbb; }
+.row-btns { display: flex; gap: 10px; }
+
+/* ────────────────────────────────
+   PAGE 3 — KERANJANG
+──────────────────────────────── */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  margin-bottom: 12px;
+}
+.cart-item img { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+.cart-item-info { flex: 1; }
+.cart-item-info h4 { font-size: 14px; font-weight: 700; }
+.cart-item-info .c-price { font-size: 13px; color: #A92E2E; font-weight: 600; margin-top: 2px; }
+.cart-qty-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+
+.total-box {
+  background: white;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+.total-row { display: flex; justify-content: space-between; font-size: 13px; color: #666; margin-bottom: 6px; }
+.total-row.big { font-size: 15px; font-weight: 700; color: #222; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #eee; }
+
+/* ────────────────────────────────
+   PAGE 4 — DATA PEMESANAN
+──────────────────────────────── */
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1.5px solid #e0d5c8;
+  border-radius: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  background: white;
+  outline: none;
+  transition: border-color .2s;
+}
+.form-input:focus { border-color: #A92E2E; }
+textarea.form-input { height: 90px; resize: none; }
+
+/* ────────────────────────────────
+   PAGE 5 — RINGKASAN PESANAN
+──────────────────────────────── */
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+}
+.summary-item img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; }
+.summary-item-info { flex: 1; font-size: 13px; }
+.summary-item-info strong { display: block; font-size: 13px; }
+.summary-item-info .s-qty { color: #888; font-size: 12px; }
+.summary-item .s-price { font-size: 13px; font-weight: 700; color: #A92E2E; white-space: nowrap; }
+
+/* ────────────────────────────────
+   PAGE 6 — QRIS PAYMENT
+──────────────────────────────── */
+#page6 .qris-container { text-align: center; padding: 15px 15px; }
+#page6 .total-pay { font-size: 14px; color: #666; }
+#page6 .total-pay span { font-size: 22px; font-weight: 700; color: #222; display: block; margin-top: 2px; }
+#page6 .qr-wrap {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  display: inline-block;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+  margin: 16px 0;
+}
+#page6 .qr-wrap img { width: 180px; height: 180px; display: block; }
+#page6 .qr-note { font-size: 12px; color: #888; margin-bottom: 14px; }
+.countdown-box {
+  background: white;
+  border-radius: 16px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  margin-bottom: 16px;
+}
+.countdown-box .cd-label { font-size: 13px; color: #888; }
+.countdown-box .cd-time { font-size: 28px; font-weight: 700; color: #A92E2E; font-variant-numeric: tabular-nums; }
+.cd-warn { color: #e55 !important; }
+
+/* ────────────────────────────────
+   PAGE 7 — STATUS TRANSAKSI
+──────────────────────────────── */
+.status-card {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  margin-bottom: 14px;
+}
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 7px 0;
+  border-bottom: 1px solid #f0e8dd;
+}
+.status-row:last-child { border-bottom: none; }
+.status-row .s-label { color: #888; }
+.status-row .s-val { font-weight: 600; color: #333; }
+.badge-lunas { color: #2d8a4e; font-weight: 700; }
+.badge-selesai { color: #2d8a4e; font-weight: 700; }
+.kitchen-note {
+  background: #fff8ee;
+  border: 1.5px solid #f0d9a0;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.kitchen-note .note-icon { font-size: 24px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- ══════════════════════════════
+     PAGE 0 — SPLASH
+══════════════════════════════ -->
+<div class="page active" id="page0">
+  <div class="brand">AYAM BAKAR 123</div>
+  <div class="tagline">Masakan ini tidak sempurna, tapi chef-nya iya (John Bennet).</div>
+  <div style="display:flex; justify-content:center; padding:20px;">
+    <img class="splash-img" src="7.png" alt="Ayam Bakar 123" style="width:160px; height:160px; object-fit:cover; border-radius:24px;">
+  </div>
+  <button class="btn" onclick="showPage('page1')">Mulai Pesan</button>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 1 — MENU
+══════════════════════════════ -->
+<div class="page" id="page1">
+  <div class="header">
+    <button class="btn-home" onclick="showPage('page0')" title="Kembali ke halaman utama">🏠</button>
+    <h1>AYAM BAKAR 123</h1>
+    <div class="header-sub">MENU</div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Cari menu..." oninput="filterMenu(this.value)">
+    </div>
+  </div>
+  <div class="scroll-body" id="menuList">
+
+    <!-- Item 1 -->
+    <div class="menu-card" data-name="ayam bakar">
+      <img src="8.png" alt="Ayam Bakar">
+      <div class="menu-info">
+        <h3>Ayam Bakar</h3>
+        <div class="price">Rp25.000</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(0, -1)">−</button>
+          <span class="qty-num" id="qty0">0</span>
+          <button class="qty-btn" onclick="changeQty(0, 1)">+</button>
+        </div>
+        <span class="detail-link" onclick="openDetail(0)">Lihat Detail</span>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="menu-card" data-name="capcay">
+      <img src="9.png" alt="Capcay">
+      <div class="menu-info">
+        <h3>Capcay</h3>
+        <div class="price">Rp10.000</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(1, -1)">−</button>
+          <span class="qty-num" id="qty1">0</span>
+          <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
+        </div>
+        <span class="detail-link" onclick="openDetail(1)">Lihat Detail</span>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="menu-card" data-name="bakwan jagung">
+      <img src="10.png" alt="Bakwan Jagung">
+      <div class="menu-info">
+        <h3>Bakwan Jagung</h3>
+        <div class="price">Rp3.000</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(2, -1)">−</button>
+          <span class="qty-num" id="qty2">0</span>
+          <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
+        </div>
+        <span class="detail-link" onclick="openDetail(2)">Lihat Detail</span>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="menu-card" data-name="sate usus ati ampela">
+      <img src="11.png" alt="Sate Usus">
+      <div class="menu-info">
+        <h3>Sate Usus dan Ati Ampela</h3>
+        <div class="price">Rp4.000</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(3, -1)">−</button>
+          <span class="qty-num" id="qty3">0</span>
+          <button class="qty-btn" onclick="changeQty(3, 1)">+</button>
+        </div>
+        <span class="detail-link" onclick="openDetail(3)">Lihat Detail</span>
+      </div>
+    </div>
+
+    <div style="height:10px"></div>
+  </div>
+  <div class="bottom-bar">
+    <div class="cart-btn-row" onclick="goToCart()">
+      <span class="cart-icon">🛒</span>
+      <span>Lihat Keranjang</span>
+      <span id="cartBadge" style="background:white;color:#A92E2E;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">0</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 2 — DETAIL MENU
+══════════════════════════════ -->
+<div class="page" id="page2">
+  <img class="detail-img" id="detailImg" src="" alt="">
+  <div class="scroll-body" style="padding:0">
+    <div class="detail-content">
+      <h2 id="detailName"></h2>
+      <div class="price-big" id="detailPrice"></div>
+      <p class="desc-text" id="detailDesc"></p>
+      <div class="badge-tersedia">🟢 Tersedia</div>
+      <div class="qty-row-big">
+        <button class="qty-btn-big" onclick="changeDetailQty(-1)">−</button>
+        <span class="qty-num-big" id="detailQty">1</span>
+        <button class="qty-btn-big" onclick="changeDetailQty(1)">+</button>
+      </div>
+      <textarea class="note-area" placeholder="Tambahkan catatan untuk pesanan ini..."></textarea>
+      <div class="row-btns">
+        <button class="btn-outline" style="flex:1" onclick="showPage('page1')">Kembali ke Katalog</button>
+        <button class="btn" style="flex:1" onclick="addToCartFromDetail()">Tambah ke Keranjang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 3 — KERANJANG
+══════════════════════════════ -->
+<div class="page" id="page3">
+  <div class="header">
+    <button class="btn-home" onclick="showPage('page0')" title="Kembali ke halaman utama">🏠</button>
+    <h1>KERANJANG</h1>
+    <div class="header-sub" id="cartHeaderSub"></div>
+  </div>
+  <div class="scroll-body">
+    <div id="cartItems"></div>
+    <div class="total-box">
+      <div class="total-row"><span>Subtotal</span><span id="subtotal">Rp0</span></div>
+      <div class="total-row"><span>Biaya layanan</span><span>Rp0</span></div>
+      <div class="total-row big"><span>TOTAL SEMENTARA</span><span id="cartTotal">Rp0</span></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-outline" style="flex:1" onclick="showPage('page1')">Pilih Menu Lain</button>
+      <button class="btn" style="flex:1" onclick="goToOrder()">Selesaikan Pesanan</button>
+    </div>
+    <div style="height:10px"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 4 — DATA PEMESANAN
+══════════════════════════════ -->
+<div class="page" id="page4">
+  <div class="header">
+    <button class="btn-home" onclick="showPage('page0')" title="Kembali ke halaman utama">🏠</button>
+    <h1>DATA PEMESANAN</h1>
+    <div class="header-sub">Isi data diri kamu</div>
+  </div>
+  <div class="scroll-body">
+    <div class="form-group">
+      <label class="form-label">Nama</label>
+      <input type="text" class="form-input" id="inputNama" placeholder="Masukkan nama kamu...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">No. Telepon</label>
+      <input type="tel" class="form-input" id="inputHP" placeholder="08xxxxxxxxxx">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Catatan</label>
+      <textarea class="form-input" id="inputCatatan" placeholder="Contoh: tanpa sambal, level pedas sedang..."></textarea>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="btn-outline" style="flex:1" onclick="showPage('page3')">Kembali</button>
+      <button class="btn" style="flex:1" onclick="goToSummary()">Lanjut</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 5 — RINGKASAN PESANAN
+══════════════════════════════ -->
+<div class="page" id="page5">
+  <div class="header">
+    <button class="btn-home" onclick="showPage('page0')" title="Kembali ke halaman utama">🏠</button>
+    <h1>RINGKASAN PESANAN</h1>
+    <div class="header-sub">Periksa pesananmu sebelum bayar</div>
+  </div>
+  <div class="scroll-body">
+    <div id="summaryItems"></div>
+    <div class="total-box">
+      <div class="total-row"><span>Nama Pembeli</span><span id="summaryNama" style="font-weight:600;color:#333"></span></div>
+      <div class="total-row"><span>No. Telepon</span><span id="summaryHP" style="font-weight:600;color:#333"></span></div>
+      <div class="total-row big"><span>TOTAL PEMBAYARAN</span><span id="summaryTotal" style="color:#A92E2E">Rp0</span></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-outline" style="flex:1" onclick="showPage('page4')">Kembali</button>
+      <button class="btn" style="flex:1" onclick="goToQRIS()">Bayar Sekarang</button>
+    </div>
+    <div style="height:10px"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 6 — QRIS PAYMENT
+══════════════════════════════ -->
+<div class="page" id="page6">
+  <div class="header">
+    <button class="btn-home" onclick="showPage('page0')" title="Kembali ke halaman utama">🏠</button>
+    <h1>PEMBAYARAN QRIS</h1>
+    <div class="header-sub">Scan untuk membayar</div>
+  </div>
+  <div class="scroll-body">
+    <div class="qris-container">
+      <div class="total-pay">Total Pembayaran<span id="qrisTotal">Rp0</span></div>
+      <div class="qr-wrap">
+        <img src="12.jpeg" alt="QRIS">
+      </div>
+      <p class="qr-note">Silakan scan QRIS untuk melakukan pembayaran.</p>
+    </div>
+    <div class="countdown-box">
+      <div>
+        <div class="cd-label">Waktu Pembayaran</div>
+      </div>
+      <div class="cd-time" id="countdown">00:10</div>
+    </div>
+    <button class="btn btn-full" onclick="bayarSekarang()">Bayar Sekarang</button>
+    <div style="height:10px"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 7 — STATUS TRANSAKSI
+══════════════════════════════ -->
+<div class="page" id="page7">
+  <div class="header">
+    <button class="btn-home" onclick="showPage('page0')" title="Kembali ke halaman utama">🏠</button>
+    <h1>STATUS TRANSAKSI</h1>
+    <div class="header-sub">Detail pesananmu</div>
+  </div>
+  <div class="scroll-body">
+    <div class="status-card">
+      <div class="status-row"><span class="s-label">Nomor Pesanan</span><span class="s-val" id="orderNum">#--</span></div>
+      <div class="status-row"><span class="s-label">Nama Pembeli</span><span class="s-val" id="statusNama">-</span></div>
+      <div class="status-row"><span class="s-label">Total Bayar</span><span class="s-val" id="statusTotal">-</span></div>
+      <div class="status-row"><span class="s-label">Status Pembayaran</span><span class="s-val badge-lunas">Lunas</span></div>
+      <div class="status-row"><span class="s-label">Status Pesanan</span><span class="s-val badge-selesai">Selesai</span></div>
+    </div>
+    <div class="kitchen-note">
+      <span class="note-icon">🍳</span>
+      <span>Pesanan Anda telah diteruskan ke dapur. Mohon tunggu, pesanan akan segera disiapkan.</span>
+    </div>
+    <button class="btn btn-full" onclick="restartApp()">Kembali ke Katalog</button>
+    <div style="height:10px"></div>
+  </div>
+</div>
+
+</div><!-- end .phone -->
+
+<script>
+// ── DATA ──────────────────────────────────────
+const menuData = [
+  { name: 'Ayam Bakar',              price: 25000, img: '8.png', desc: 'Ayam bakar empuk dibalut sambal cabe ulek yang gurih, pedas segar, dan wangi. Disajikan dengan nasi, sambal, dan lalapan segar.' },
+  { name: 'Capcay',                  price: 10000, img: '9.png', desc: 'Sayuran segar yang dimasak dengan bumbu khas, sehat dan lezat.' },
+  { name: 'Bakwan Jagung',           price: 3000,  img: '10.png', desc: 'Bakwan jagung gurih dan renyah, cocok sebagai lauk tambahan.' },
+  { name: 'Sate Usus dan Ati Ampela',price: 4000,  img: '11.png', desc: 'Sate usus dan ati ampela dengan bumbu manis gurih yang meresap.' },
+];
+
+let quantities = [0, 0, 0, 0];
+let currentDetailIdx = 0;
+let countdownInterval = null;
+let timeLeft = 10;
+
+// ── HELPERS ───────────────────────────────────
+function fmt(n) { return 'Rp' + n.toLocaleString('id-ID'); }
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── MENU ──────────────────────────────────────
+function changeQty(idx, delta) {
+  quantities[idx] = Math.max(0, quantities[idx] + delta);
+  document.getElementById('qty' + idx).textContent = quantities[idx];
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const total = quantities.reduce((a, b) => a + b, 0);
+  document.getElementById('cartBadge').textContent = total;
+}
+
+function filterMenu(q) {
+  const cards = document.querySelectorAll('.menu-card');
+  cards.forEach(c => {
+    c.style.display = c.dataset.name.includes(q.toLowerCase()) ? 'flex' : 'none';
+  });
+}
+
+function goToCart() {
+  const total = quantities.reduce((a, b) => a + b, 0);
+  if (total === 0) { alert('Pilih menu dulu ya! 😊'); return; }
+  renderCart();
+  showPage('page3');
+}
+
+// ── DETAIL ────────────────────────────────────
+function openDetail(idx) {
+  currentDetailIdx = idx;
+  const m = menuData[idx];
+  document.getElementById('detailImg').src = m.img;
+  document.getElementById('detailName').textContent = m.name;
+  document.getElementById('detailPrice').textContent = fmt(m.price);
+  document.getElementById('detailDesc').textContent = m.desc;
+  document.getElementById('detailQty').textContent = Math.max(1, quantities[idx]);
+  showPage('page2');
+}
+
+function changeDetailQty(delta) {
+  const el = document.getElementById('detailQty');
+  const newVal = Math.max(1, parseInt(el.textContent) + delta);
+  el.textContent = newVal;
+}
+
+function addToCartFromDetail() {
+  const q = parseInt(document.getElementById('detailQty').textContent);
+  quantities[currentDetailIdx] = q;
+  document.getElementById('qty' + currentDetailIdx).textContent = q;
+  updateCartBadge();
+  showPage('page1');
+}
+
+// ── CART ──────────────────────────────────────
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  container.innerHTML = '';
+  let total = 0;
+  let itemCount = 0;
+
+  menuData.forEach((m, i) => {
+    if (quantities[i] === 0) return;
+    const lineTotal = m.price * quantities[i];
+    total += lineTotal;
+    itemCount += quantities[i];
+    container.innerHTML += `
+      <div class="cart-item">
+        <img src="${m.img}" alt="${m.name}">
+        <div class="cart-item-info">
+          <h4>${m.name}</h4>
+          <div class="c-price">${fmt(lineTotal)}</div>
+          <div class="cart-qty-ctrl">
+            <button class="qty-btn" onclick="changeCartQty(${i}, -1)">−</button>
+            <span class="qty-num" id="cqty${i}">${quantities[i]}</span>
+            <button class="qty-btn" onclick="changeCartQty(${i}, 1)">+</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#A92E2E;font-weight:600;">${quantities[i]}x</div>
+      </div>`;
+  });
+
+  document.getElementById('subtotal').textContent = fmt(total);
+  document.getElementById('cartTotal').textContent = fmt(total);
+  document.getElementById('cartHeaderSub').textContent = itemCount + ' item dipilih';
+}
+
+function changeCartQty(idx, delta) {
+  quantities[idx] = Math.max(0, quantities[idx] + delta);
+  document.getElementById('qty' + idx).textContent = quantities[idx];
+  updateCartBadge();
+  renderCart();
+}
+
+// ── ORDER ─────────────────────────────────────
+function goToOrder() {
+  showPage('page4');
+}
+
+function goToSummary() {
+  const nama = document.getElementById('inputNama').value.trim();
+  const hp   = document.getElementById('inputHP').value.trim();
+  if (!nama || !hp) { alert('Mohon lengkapi nama dan nomor telepon ya! 😊'); return; }
+  renderSummary(nama, hp);
+  showPage('page5');
+}
+
+function renderSummary(nama, hp) {
+  const container = document.getElementById('summaryItems');
+  container.innerHTML = '';
+  let total = 0;
+
+  menuData.forEach((m, i) => {
+    if (quantities[i] === 0) return;
+    const lineTotal = m.price * quantities[i];
+    total += lineTotal;
+    container.innerHTML += `
+      <div class="summary-item">
+        <img src="${m.img}" alt="${m.name}">
+        <div class="summary-item-info">
+          <strong>${m.name}</strong>
+          <span class="s-qty">${quantities[i]}x · ${fmt(m.price)}</span>
+        </div>
+        <div class="s-price">${fmt(lineTotal)}</div>
+      </div>`;
+  });
+
+  document.getElementById('summaryNama').textContent = nama;
+  document.getElementById('summaryHP').textContent = hp;
+  document.getElementById('summaryTotal').textContent = fmt(total);
+}
+
+// ── QRIS ──────────────────────────────────────
+function goToQRIS() {
+  const total = document.getElementById('summaryTotal').textContent;
+  document.getElementById('qrisTotal').textContent = total;
+  startCountdown();
+  showPage('page6');
+}
+
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  timeLeft = 10;
+  updateCountdownDisplay();
+  countdownInterval = setInterval(() => {
+    timeLeft--;
+    updateCountdownDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      document.getElementById('countdown').textContent = '00:00';
+    }
+  }, 1000);
+}
+
+function updateCountdownDisplay() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  const el = document.getElementById('countdown');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'cd-time' + (timeLeft <= 30 ? ' cd-warn' : '');
+}
+
+function bayarSekarang() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  const orderNum = '#' + String(Math.floor(Math.random() * 90) + 10).padStart(2, '0');
+  document.getElementById('orderNum').textContent = orderNum;
+  document.getElementById('statusNama').textContent = document.getElementById('inputNama').value || '-';
+  document.getElementById('statusTotal').textContent = document.getElementById('qrisTotal').textContent;
+  showPage('page7');
+}
+
+// ── RESTART ───────────────────────────────────
+function restartApp() {
+  quantities = [0, 0, 0, 0];
+  document.querySelectorAll('.qty-num').forEach((el, i) => { if (i < 4) el.textContent = '0'; });
+  updateCartBadge();
+  document.getElementById('inputNama').value = '';
+  document.getElementById('inputHP').value = '';
+  document.getElementById('inputCatatan').value = '';
+  if (countdownInterval) clearInterval(countdownInterval);
+  showPage('page1');
+}
+</script>
+</body>
+</html>
